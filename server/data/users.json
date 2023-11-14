@@ -1,0 +1,14 @@
+[
+    {
+        "email": "admin@google.com",
+        "password": "admin123",
+        "role": "Admin",
+        "fullName": "Tantyo Wisnu"
+    },
+    {
+      "email": "cashier1@google.com",
+      "password": "cashier1123",
+      "role": "Cashier",
+      "fullName": "Buana Ramadhan"
+    }
+]
