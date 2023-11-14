@@ -4,11 +4,8 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/');
+router.get('/products');
 
-router.use('/products');
-
-router.post('/');
-
+router.get('/transactions');
 
 module.exports = router;
