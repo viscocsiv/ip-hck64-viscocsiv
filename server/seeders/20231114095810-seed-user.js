@@ -1,19 +1,17 @@
 'use strict';
-const axios = require('axios');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    const products = await axios({
-      method: 'get',
-      url: 'https://simple-grocery-store-api.glitch.me/products'
-    }).map((product) => {
-      
+  async up(queryInterface, Sequelize) {
+    const users = require('../data/users.json').map((user) => {
+      user.createdAt = new Date();
+      user.updatedAt = new Date();
+      return user;
     })
-    await queryInterface.bulkInsert('Products', products);
+    await queryInterface.bulkInsert('Users', users);
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Products', null, {});
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete('Users', null, {});
   }
 };
