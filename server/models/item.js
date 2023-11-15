@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {
+  class Item extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,50 +11,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.hasMany(models.Item);
+      Item.belongsTo(models.Product);
+      Item.belongsTo(models.Cart);
     }
   }
-  Product.init({
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Name is required'
-        },
-        notEmpty: {
-          msg: 'Name is required'
-        }
-      }
-    },
-    category: DataTypes.STRING,
-    inStock: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Stock is required'
-        },
-        notEmpty: {
-          msg: 'Stock is required'
-        }
-      }
-    },
-    price: {
+  Item.init({
+    CartId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Price is required'
+          msg: 'CartId is required'
         },
         notEmpty: {
-          msg: 'Price is required'
+          msg: 'CartId is required'
         }
       }
+    },
+    ProductId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'ProductId is required'
+        },
+        notEmpty: {
+          msg: 'ProductId is required'
+        }
+      }
+    },
+    quantity: {
+      defaultValue: 1,
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
-    modelName: 'Product',
+    modelName: 'Item',
   });
-  return Product;
+  return Item;
 };

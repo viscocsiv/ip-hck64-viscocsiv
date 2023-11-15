@@ -9,22 +9,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ProductId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Products',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
       totalPrice: {
         defaultValue: 0,
-        type: Sequelize.INTEGER
-      },
-      quantity: {
-        defaultValue: 1,
         type: Sequelize.INTEGER
       },
       createdAt: {

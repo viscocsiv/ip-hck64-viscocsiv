@@ -11,25 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Cart.belongsTo(models.Product);
+      Cart.hasMany(models.Item);
     }
   }
   Cart.init({
-    ProductId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'ProductId is required'
-        }, notEmpty: {
-          msg: 'ProductId is required'
-        }
-      }
-    },
-    quantity: {
-      type: DataTypes.INTEGER,
-      defaultValue: 1,
-    },
     totalPrice: {
       type: DataTypes.INTEGER,
       defaultValue: 0
