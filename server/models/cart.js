@@ -12,27 +12,50 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Cart.belongsTo(models.Product);
+      Cart.belongsTo(models.Order);
+      Cart.belongsTo(models.User);
     }
   }
   Cart.init({
+    OrderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'OrderId is required'
+        },
+        notEmpty: {
+          msg: 'OrderId is required'
+        }
+      }
+    },
     ProductId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
           msg: 'ProductId is required'
-        }, notEmpty: {
+        },
+        notEmpty: {
           msg: 'ProductId is required'
         }
       }
     },
-    quantity: {
+    UserId: {
       type: DataTypes.INTEGER,
-      defaultValue: 1,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'UserId is required'
+        },
+        notEmpty: {
+          msg: 'UserId is required'
+        }
+      }
     },
-    totalPrice: {
+    quantity: {
+      defaultValue: 1,
       type: DataTypes.INTEGER,
-      defaultValue: 0
     }
   }, {
     sequelize,
