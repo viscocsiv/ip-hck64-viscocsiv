@@ -57,7 +57,7 @@ class CartController {
         try {
             const { OrderId, CartId } = req.params;
             const { quantity } = req.body;
-            const updatedCart = await Cart.update({ quantity }, {
+            await Cart.update({ quantity }, {
                 where: {
                     id: CartId
                 },
@@ -85,10 +85,25 @@ class CartController {
 
     static async deleteProductFromCart(req, res, next) {
         try {
-            const { CartId } = req / params
+            const { CartId, OrderId } = req.params
             await Cart.destroy({
-                where: { id }
+                where: { id: CartId }
+            });
+            const carts = await Cart.findAll({
+                where: {
+                    OrderId
+                }, include: Product
             })
+            let totalPrice = 0;
+            carts.forEach((el) => {
+                // console.log(el);
+                const { quantity } = el
+                totalPrice += quantity * el.Product.price
+            })
+            await Order.update({ totalPrice }, {
+                where: { id: OrderId }
+            })
+            res.status(200).json({ totalPrice, carts })
         } catch (error) {
             next(error);
         }
