@@ -19,22 +19,12 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      UserId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
-      },
-      quantity: {
-        allowNull: false,
+      totalPrice: {
+        defaultValue: 0,
         type: Sequelize.INTEGER
       },
-      totalPrice: {
-        allowNull: false,
+      quantity: {
+        defaultValue: 1,
         type: Sequelize.INTEGER
       },
       createdAt: {
