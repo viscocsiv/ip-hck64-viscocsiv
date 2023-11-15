@@ -12,14 +12,28 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Cart.belongsTo(models.Product);
-      Cart.belongsTo(models.User);
     }
   }
   Cart.init({
-    ProductId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
-    quantity: DataTypes.INTEGER,
-    totalPrice: DataTypes.INTEGER
+    ProductId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'ProductId is required'
+        }, notEmpty: {
+          msg: 'ProductId is required'
+        }
+      }
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1,
+    },
+    totalPrice: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    }
   }, {
     sequelize,
     modelName: 'Cart',
