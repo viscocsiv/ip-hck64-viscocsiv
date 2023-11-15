@@ -6,6 +6,7 @@ const authentication = require('../middlewares/authentication');
 const AuthController = require('../controllers/AuthController');
 const ProductController = require('../controllers/ProductController');
 const OrderController = require('../controllers/OrderController');
+const CartController = require('../controllers/CartController');
 const router = express.Router();
 
 router.post('/login', AuthController.login);
@@ -16,14 +17,16 @@ router.get('/products', ProductController.getAllProducts);
 
 router.post('/orders', OrderController.createOrder);
 
-router.get('/orders/:OrderId');
+router.get('/orders/:OrderId', OrderController.getOrderDetail);
 
-router.post('/orders/:OrderId/carts');
+router.post('/orders/:OrderId/carts', CartController.addProductToCart);
 
-router.put('/orders/:OrderId/carts/:CartId');
+router.get('/orders/:OrderId/carts/:CartId', CartController.getCartDetail)
 
-router.delete('/orders/:OrderId/carts/:CartId');
+router.patch('/orders/:OrderId/carts/:CartId', CartController.editQuantity);
 
-router.use(errorHandler)
+router.delete('/orders/:OrderId/carts/:CartId', CartController.deleteProductFromCart);
+
+router.use(errorHandler);
 
 module.exports = router;
