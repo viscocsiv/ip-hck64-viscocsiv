@@ -3,6 +3,8 @@ import url from "../../constants";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import GoogleLoginButton from "../components/GoogleLoginButton";
+import loginImage from "../assets/login-background.svg"
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -42,27 +44,42 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="main-container" id="login-container">
-        <form id="login-form" className="wrapper-col" onSubmit={handleLogin}>
-          <h1>Login to CMS</h1>
-          <div className="wrapper-col input-container">
+      <div className="grid grid-cols-2">
+        <form
+          className="rounded-xl flex flex-col p-14 m-16 items-center gap-20 bg-violet-950"
+          onSubmit={handleLogin}
+        >
+          <div className="m-4">
+            <h1 className="text-lg">Welcome to MyGroceries POS</h1>
+          </div>
+          <div className="flex flex-col gap-10 w-full items-center">
             <input
-              type="email"
+              type="text"
               placeholder="Email"
+              className="input input-bordered w-full"
               name="email"
               onChange={handleChange}
             />
             <input
               type="password"
               placeholder="Password"
+              className="input input-bordered w-full"
               name="password"
               onChange={handleChange}
             />
-            <button id="login-btn" className="submit-btn">
-              LOGIN
+            <button className="btn bg-lime-500 hover:bg-lime-700 w-full max-w-xs">
+              Login
             </button>
           </div>
+          <div className="flex flex-col items-center w-full gap-4">
+            <hr className="w-full" />
+            <p>Or continue with</p>
+            <GoogleLoginButton />
+          </div>
         </form>
+        <div className="p-14 flex justify-center bg-gradient-to-r from-violet-500 to-fuchsia-500">
+          <img src={loginImage} alt="" />
+        </div>
       </div>
     </>
   );
