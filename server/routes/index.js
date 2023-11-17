@@ -7,6 +7,7 @@ const AuthController = require('../controllers/AuthController');
 const ProductController = require('../controllers/ProductController');
 const OrderController = require('../controllers/OrderController');
 const CartController = require('../controllers/CartController');
+const PaymentController = require('../controllers/PaymentController');
 const router = express.Router();
 
 router.post('/login', AuthController.login);
@@ -18,6 +19,8 @@ router.use(authentication);
 router.get('/products', ProductController.getAllProducts);
 
 router.post('/orders', OrderController.createOrder);
+
+router.post("/payment/:OrderId", PaymentController.midtransPayment)
 
 router.get('/orders/:OrderId', OrderController.getOrderDetail);
 

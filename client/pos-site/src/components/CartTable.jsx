@@ -14,6 +14,24 @@ export default function CartTable({
 }) {
   const [quantity, setQuantity] = useState(1);
 
+  async function createMidtrans() {
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: `http://localhost:3000/payment/${id}`,
+        data: {
+          price: transportation.data.price,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+      });
+      window.snap.pay(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const deleteModal = async (cartId, orderId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -132,7 +150,11 @@ export default function CartTable({
       <div className="flex flex-col gap-4">
         <h1 className="text-xl">Total Price: {formatPrice(totalPrice)}</h1>
         <button
-          onClick={(event) => {}}
+          onClick={(event) => {
+            event.preventDefault();
+
+            createMidtrans()
+          }}
           className="btn bg-lime-500 hover:bg-lime-700"
         >
           Payment
