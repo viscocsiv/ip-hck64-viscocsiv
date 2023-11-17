@@ -26,6 +26,7 @@ export default function LoginPage() {
     event.preventDefault();
     try {
       const { data } = await axios.post(url + "/login", form);
+      
       localStorage.access_token = data.access_token;
       return navigate("/");
     } catch (error) {

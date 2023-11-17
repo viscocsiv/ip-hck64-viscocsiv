@@ -10,9 +10,9 @@ class CartController {
             // console.log(OrderId);
             const { ProductId } = req.body;
             const itemToAdd = await Cart.findOne({
-                where: { ProductId }
+                where: { ProductId, OrderId }
             })
-            // console.log(itemToAdd);
+            console.log(itemToAdd);
             if (itemToAdd) throw { name: 'DuplicatedInput' };
             const cart = await Cart.create({
                 UserId: id,
@@ -37,6 +37,19 @@ class CartController {
             res.status(201).json({ totalPrice, carts });
         } catch (error) {
             next(error);
+        }
+    }
+
+    static async getCarts(req, res, next) {
+        try {
+            const {OrderId} = req.params
+            const carts = await Cart.findAll({
+                where: {
+                    OrderId
+                }
+            })
+        } catch (error) {
+            next(error)
         }
     }
 

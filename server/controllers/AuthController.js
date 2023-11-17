@@ -26,7 +26,7 @@ class AuthController {
             const access_token = createToken({ id: user.id });
 
             // send response
-            res.status(200).json({ access_token });
+            res.status(200).json({ access_token, userId: user.id });
         } catch (error) {
             next(error);
         }

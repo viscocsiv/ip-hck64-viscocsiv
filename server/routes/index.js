@@ -23,6 +23,8 @@ router.get('/orders/:OrderId', OrderController.getOrderDetail);
 
 router.post('/orders/:OrderId/carts', CartController.addProductToCart);
 
+router.get('/orders/:OrderId/carts', CartController.getCarts);
+
 router.get('/orders/:OrderId/carts/:CartId', CartController.getCartDetail)
 
 router.patch('/orders/:OrderId/carts/:CartId', CartController.editQuantity);
