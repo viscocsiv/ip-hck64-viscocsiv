@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
 export default function CartTable({
+  orderId,
   setItemsInCart,
   itemsInCart,
   totalPrice,
@@ -14,13 +15,13 @@ export default function CartTable({
 }) {
   const [quantity, setQuantity] = useState(1);
 
-  async function createMidtrans() {
+  async function createMidtrans(orderId) {
     try {
       const { data } = await axios({
         method: "post",
-        url: `http://localhost:3000/payment/${id}`,
+        url: `http://localhost:3000/payment/${orderId}`,
         data: {
-          price: transportation.data.price,
+          price: data.price,
         },
         headers: {
           Authorization: `Bearer ${localStorage.access_token}`,
@@ -153,7 +154,7 @@ export default function CartTable({
           onClick={(event) => {
             event.preventDefault();
 
-            createMidtrans()
+            createMidtrans(orderId)
           }}
           className="btn bg-lime-500 hover:bg-lime-700"
         >

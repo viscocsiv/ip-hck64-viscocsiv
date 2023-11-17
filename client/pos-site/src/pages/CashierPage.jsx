@@ -60,8 +60,8 @@ export default function CashierPage() {
       console.log(data);
       setOrderId(data.OrderId);
       setUserId(data.UserId);
-      setItemsInCart(null)
-      setTotalPrice(null)
+      setItemsInCart(null);
+      setTotalPrice(null);
       toast.success(`created new Order with id ${data.OrderId}`, {
         position: "top-right",
         autoClose: 5000,
@@ -120,6 +120,7 @@ export default function CashierPage() {
         <div className="flex flex-col align-middle items-center p-4">
           <h1 className="my-2.5 text-xl">Cart</h1>
           <CartTable
+            orderId={orderId}
             setItemsInCart={setItemsInCart}
             setTotalPrice={setTotalPrice}
             itemsInCart={itemsInCart}
