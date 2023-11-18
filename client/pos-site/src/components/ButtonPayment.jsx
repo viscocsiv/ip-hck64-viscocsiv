@@ -2,8 +2,14 @@
 import axios from "axios";
 import url from "../../constants";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export default function ButtonPayment({ totalPrice }) {
+export default function ButtonPayment({
+  setOrderId,
+  setItemsInCart,
+  setTotalPrice,
+  totalPrice,
+}) {
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
@@ -21,20 +27,32 @@ export default function ButtonPayment({ totalPrice }) {
       window.snap.pay(data.transaction_token, {
         onSuccess: function () {
           /* You may add your own implementation here */
-          alert("payment success!");
-          navigate("/");
+          setItemsInCart(null);
+          setTotalPrice(null);
+          setOrderId(null);
+          navigate("/cashier");
         },
         onPending: function () {
           /* You may add your own implementation here */
-          alert("waiting your payment!");
+          Swal.fire({
+            title: "Waiting your payment!",
+            icon: "info",
+          });
         },
         onError: function () {
           /* You may add your own implementation here */
-          alert("payment failed!");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Your payment is failed",
+          });
         },
         onClose: function () {
           /* You may add your own implementation here */
-          alert("you closed the popup without finishing the payment");
+          Swal.fire({
+            title: "You closed the popup without finishing the payment",
+            icon: "warning",
+          });
           navigate("/cashier");
         },
       });

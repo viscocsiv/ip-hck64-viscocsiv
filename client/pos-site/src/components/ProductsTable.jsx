@@ -15,7 +15,7 @@ export default function ProductsTable({ addItemToCart, products, orderId, userId
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => {
+          {products?.map((product) => {
             const { id, name, price, category } = product;
             return (
               <tr key={id}>
