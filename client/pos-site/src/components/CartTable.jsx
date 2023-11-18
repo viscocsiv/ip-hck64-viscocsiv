@@ -8,18 +8,21 @@ import { toast } from "react-toastify";
 import ButtonPayment from "./ButtonPayment";
 
 export default function CartTable({
+  setCartId,
+  setOrderId,
   orderId,
   setItemsInCart,
   itemsInCart,
   totalPrice,
   setTotalPrice,
 }) {
-  const [quantity, setQuantity] = useState(1);
+  const [increment, setIncrement] = useState(null);
+  const [decrement, setDecrement] = useState(null);
 
   const deleteModal = async (cartId, orderId) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "The product will be removed from your cart!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -40,18 +43,57 @@ export default function CartTable({
     }
   };
 
-  const editQuantity = async (orderId, cartId) => {
+  const handleIncrementQuantity = async (orderId, cartId, increment) => {
     try {
+      console.log(orderId, cartId, increment);
       const { data } = await axios({
         method: "patch",
         url: url + `/orders/${orderId}/carts/${cartId}`,
         headers: {
           Authorization: `Bearer ${localStorage.access_token}`,
         },
+        data: {
+          increment
+        },
       });
-      // console.log(data);
-      setItemsInCart(data.carts)
+      console.log(data);
+      setTotalPrice(data.totalPrice);
+      setItemsInCart(data.carts);
+      setCartId(null);
     } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
+  const handleDecrementQuantity = async (orderId, cartId, decrement) => {
+    try {
+      console.log(orderId, cartId, decrement);
+      const { data } = await axios({
+        method: "patch",
+        url: url + `/orders/${orderId}/carts/${cartId}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.access_token}`,
+        },
+        data: {
+          decrement,
+        },
+      });
+      console.log(data);
+      setTotalPrice(data.totalPrice);
+      setItemsInCart(data.carts);
+      setCartId(null);
+    } catch (error) {
+      console.log(error);
       toast.error(error.response.data.message, {
         position: "top-right",
         autoClose: 5000,
@@ -78,7 +120,7 @@ export default function CartTable({
             <th>Delete Item</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="align-middle items-center">
           {/* {console.log(itemsInCart)} */}
           {itemsInCart?.map((itemInCart, idx) => {
             // console.log(itemInCart);
@@ -88,29 +130,40 @@ export default function CartTable({
                 <td>{itemInCart.Product.name}</td>
                 <td>{formatPrice(itemInCart.Product.price)}</td>
                 <td>{itemInCart.quantity}</td>
-                <td>
+                <td className="flex gap-2">
                   <div>
-                    <form className="flex flex-col xl:flex-row gap-2">
-                      <input
-                        name="quantity"
-                        value={quantity}
-                        onChange={(event) => {
-                          setQuantity(event.target.value);
-                        }}
-                        min="1"
-                        type="number"
-                        className="input input-bordered w-14"
-                      />
-                      <button
-                        onClick={(event) => {
-                          event.preventDefault();
-                          editQuantity(itemInCart.orderId, itemInCart.id);
-                        }}
-                        className="btn btn-accent w-14"
-                      >
-                        Edit
-                      </button>
-                    </form>
+                    <button
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setCartId(itemInCart.id);
+                        setIncrement("increment");
+                        handleIncrementQuantity(
+                          itemInCart.OrderId,
+                          itemInCart.id,
+                          increment
+                        );
+                      }}
+                      className="btn btn-secondary"
+                    >
+                      <p>+</p>
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setCartId(itemInCart.id);
+                        setDecrement("decrement");
+                        handleDecrementQuantity(
+                          itemInCart.OrderId,
+                          itemInCart.id,
+                          decrement
+                        );
+                      }}
+                      className="btn btn-accent "
+                    >
+                      <p>-</p>
+                    </button>
                   </div>
                 </td>
                 <td>
@@ -133,7 +186,13 @@ export default function CartTable({
       </table>
       <div className="flex flex-col gap-4">
         <h1 className="text-xl">Total Price: {formatPrice(totalPrice)}</h1>
-          <ButtonPayment orderId={orderId} totalPrice={totalPrice}/>
+        <ButtonPayment
+          setItemsInCart={setItemsInCart}
+          setTotalPrice={setTotalPrice}
+          orderId={orderId}
+          setOrderId={setOrderId}
+          totalPrice={totalPrice}
+        />
       </div>
     </>
   );

@@ -4,13 +4,20 @@
 
 List of available endpoints:
 
+Without authentication:
 - `POST /login`
+- `POST /auth/google/callback`
+
+Using authentication
 - `GET /products`
-- `POST /carts`
-- `GET /carts/:cartId`
-- `POST /carts/:cartId/items`
-- `PUT /articles/:id`
-- `DELETE /articles/:id`
+- `POST /orders`
+- `GET /orders/:OrderId`
+- `POST /orders/:OrderId/carts`
+- `GET /orders/:OrderId/carts`
+- `GET /orders/:OrderId/carts/:CartId`
+- `PATCH /orders/:OrderId/carts/:CartId`
+- `DELETE /orders/:OrderId/carts/:CartId`
+- `POST /payment/midtrans/token`
 
 ## 1. POST /login
 
@@ -33,7 +40,8 @@ _Response (201 - Created)_
 
 ```json
 {
-  "access_token": "string"
+  "access_token": "string",
+  "userId": "integer"
 }
 ```
 
@@ -57,7 +65,31 @@ _Response (401 - Unauthorized)_
 }
 ```
 
-## 2. GET /products
+## 2. POST /auth/google/callback
+
+Description:
+
+- Authenticate user login using google account and generate access token
+
+Request:
+
+- body
+
+```json
+{
+  "code": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+## 3. GET /products
 
 Description:
 
@@ -111,7 +143,7 @@ OR
 }
 ```
 
-## 3. POST /orders
+## 4. POST /orders
 
 Description:
 
@@ -145,27 +177,8 @@ _Response (201 - Created)_
 ```json
 {
     "created": "boolean",
-    "OrderId": "integer"
-}
-```
-
-_Response (400 - Bad Request)_
-
-```json
-{
-    "message": "Title cannot be empty"
-}
-OR
-{
-    "message": "Content cannot be empty"
-}
-OR
-{
-    "message": "categoryId cannot be empty"
-}
-OR
-{
-    "message": "authorId cannot be empty"
+    "OrderId": "integer",
+    "UserId": "integer"
 }
 ```
 
@@ -180,6 +193,8 @@ OR
     "message": "Invalid Token"
 }
 ```
+
+
 ## Global Error
 
 _Response (500 - Internal Server Error)_

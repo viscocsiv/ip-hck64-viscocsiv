@@ -12,7 +12,7 @@ class CartController {
             const itemToAdd = await Cart.findOne({
                 where: { ProductId, OrderId }
             })
-            console.log(itemToAdd);
+            // console.log(itemToAdd);
             if (itemToAdd) throw { name: 'DuplicatedInput' };
             const cart = await Cart.create({
                 UserId: id,
@@ -25,10 +25,10 @@ class CartController {
                 }, include: Product
             })
             let totalPrice = 0;
-            carts.forEach((el) => {
-                // console.log(el);
-                const { quantity } = el
-                totalPrice += quantity * el.Product.price
+            carts.forEach((cart) => {
+                // console.log(cart);
+                const { quantity } = cart
+                totalPrice += quantity * cart.Product.price
             })
             await Order.update({ totalPrice }, {
                 where: { id: OrderId }
@@ -42,12 +42,12 @@ class CartController {
 
     static async getCarts(req, res, next) {
         try {
-            const {OrderId} = req.params
+            const { OrderId } = req.params;
             const carts = await Cart.findAll({
                 where: {
                     OrderId
                 }
-            })
+            });
         } catch (error) {
             next(error)
         }
@@ -69,23 +69,34 @@ class CartController {
     static async editQuantity(req, res, next) {
         try {
             const { OrderId, CartId } = req.params;
-            const { quantity } = req.body;
-            await Cart.update({ quantity }, {
-                where: {
-                    id: CartId
-                },
-                returning: true
-            });
+            const { increment, decrement } = req.body;
+            if (increment === 'increment') {
+                const result = await Cart.increment('quantity', {
+                    where: { id: CartId }
+                });
+                // console.log(result);
+            } else if (decrement === 'decrement') {
+                const cart = await Cart.findByPk(CartId);
+                // console.log(Cart);
+                if(cart.quantity === 1) throw ({name: 'InvalidQuantity'})
+                const result = await Cart.decrement('quantity', {
+                    where: { id: CartId }
+                });
+                // console.log(result);
+            }
             const carts = await Cart.findAll({
                 where: {
                     OrderId
-                }, include: Product
+                }, include: Product,
+                order: [
+                    ['id', 'asc']
+                ]
             })
             let totalPrice = 0;
-            carts.forEach((el) => {
-                // console.log(el);
-                const { quantity } = el
-                totalPrice += quantity * el.Product.price
+            carts.forEach((cart) => {
+                // console.log(cart);
+                const { quantity } = cart
+                totalPrice += quantity * cart.Product.price
             })
             await Order.update({ totalPrice }, {
                 where: { id: OrderId }
@@ -108,10 +119,10 @@ class CartController {
                 }, include: Product
             })
             let totalPrice = 0;
-            carts.forEach((el) => {
-                // console.log(el);
-                const { quantity } = el
-                totalPrice += quantity * el.Product.price
+            carts.forEach((cart) => {
+                // console.log(cart);
+                const { quantity } = cart
+                totalPrice += quantity * cart.Product.price
             })
             await Order.update({ totalPrice }, {
                 where: { id: OrderId }

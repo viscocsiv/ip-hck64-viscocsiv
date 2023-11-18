@@ -36,7 +36,7 @@ class AuthController {
         try {
             // console.log(req.body);
             const { code } = req.body
-
+            // console.log(code);
             const client = new OAuth2Client();
 
             const ticket = await client.verifyIdToken({

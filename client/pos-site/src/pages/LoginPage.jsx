@@ -48,7 +48,7 @@ export default function LoginPage() {
       <div className="flex justify-center md:grid grid-cols-2 h-screen">
         <div className="flex items-center justify-center">
           <form
-            className="rounded-xl flex flex-col p-2 m-4 items-center gap-10 bg-violet-950 md:w-3/4"
+            className="rounded-xl flex flex-col p-2 m-4 items-center gap-10 bg-violet-950 md:w-5/6 xl:w-4/6"
             onSubmit={handleLogin}
           >
             <div className="p-4">

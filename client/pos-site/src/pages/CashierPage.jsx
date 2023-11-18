@@ -9,6 +9,7 @@ export default function CashierPage() {
   const [products, setProducts] = useState([]);
   const [orderId, setOrderId] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [cartId, setCartId] = useState(null);
   const [itemsInCart, setItemsInCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -97,8 +98,7 @@ export default function CashierPage() {
     <>
       <div className="grid grid-rows-2 lg:grid-cols-2 my-20">
         <div className="flex flex-col align-middle items-center p-4">
-          <div className="grid grid-cols-3 items-center w-full">
-            <div></div>
+          <div className="flex justify-between items-center w-full">
             <h1 className="my-2.5 text-xl">Product List</h1>
             <button
               onClick={(event) => {
@@ -118,8 +118,11 @@ export default function CashierPage() {
           />
         </div>
         <div className="flex flex-col align-middle items-center p-4">
-          <h1 className="my-2.5 text-xl">Cart</h1>
+            <h1 className="my-2.5 text-xl">Cart</h1>
           <CartTable
+            setCartId={setCartId}
+            cartId={cartId}
+            setOrderId={setOrderId}
             orderId={orderId}
             setItemsInCart={setItemsInCart}
             setTotalPrice={setTotalPrice}
