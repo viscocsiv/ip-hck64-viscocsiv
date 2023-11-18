@@ -5,6 +5,7 @@ import axios from "axios";
 import url from "../../constants";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import ButtonPayment from "./ButtonPayment";
 
 export default function CartTable({
   orderId,
@@ -14,24 +15,6 @@ export default function CartTable({
   setTotalPrice,
 }) {
   const [quantity, setQuantity] = useState(1);
-
-  async function createMidtrans(orderId) {
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: `http://localhost:3000/payment/${orderId}`,
-        data: {
-          price: data.price,
-        },
-        headers: {
-          Authorization: `Bearer ${localStorage.access_token}`,
-        },
-      });
-      window.snap.pay(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const deleteModal = async (cartId, orderId) => {
     const result = await Swal.fire({
@@ -98,7 +81,7 @@ export default function CartTable({
         <tbody>
           {/* {console.log(itemsInCart)} */}
           {itemsInCart?.map((itemInCart, idx) => {
-            console.log(itemInCart);
+            // console.log(itemInCart);
             return (
               <tr key={itemInCart.id}>
                 <td>{idx + 1}</td>
@@ -150,16 +133,7 @@ export default function CartTable({
       </table>
       <div className="flex flex-col gap-4">
         <h1 className="text-xl">Total Price: {formatPrice(totalPrice)}</h1>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-
-            createMidtrans(orderId)
-          }}
-          className="btn bg-lime-500 hover:bg-lime-700"
-        >
-          Payment
-        </button>
+          <ButtonPayment orderId={orderId} totalPrice={totalPrice}/>
       </div>
     </>
   );

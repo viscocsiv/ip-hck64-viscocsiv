@@ -57,7 +57,7 @@ export default function CashierPage() {
           Authorization: `Bearer ${localStorage.access_token}`,
         },
       });
-      console.log(data);
+      // console.log(data);
       setOrderId(data.OrderId);
       setUserId(data.UserId);
       setItemsInCart(null);

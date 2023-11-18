@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GoogleLoginButton from "../components/GoogleLoginButton";
-import loginImage from "../assets/login-background.svg"
+import loginImage from "../assets/login-background.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function LoginPage() {
     event.preventDefault();
     try {
       const { data } = await axios.post(url + "/login", form);
-      
+
       localStorage.access_token = data.access_token;
       return navigate("/");
     } catch (error) {
@@ -45,40 +45,48 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="grid grid-cols-2">
-        <form
-          className="rounded-xl flex flex-col p-14 m-16 items-center gap-20 bg-violet-950"
-          onSubmit={handleLogin}
-        >
-          <div className="m-4">
-            <h1 className="text-lg">Welcome to MyGroceries POS</h1>
-          </div>
-          <div className="flex flex-col gap-10 w-full items-center">
-            <input
-              type="text"
-              placeholder="Email"
-              className="input input-bordered w-full"
-              name="email"
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              className="input input-bordered w-full"
-              name="password"
-              onChange={handleChange}
-            />
-            <button className="btn bg-lime-500 hover:bg-lime-700 w-full max-w-xs">
-              Login
-            </button>
-          </div>
-          <div className="flex flex-col items-center w-full gap-4">
-            <hr className="w-full" />
-            <p>Or continue with</p>
-            <GoogleLoginButton />
-          </div>
-        </form>
-        <div className="p-14 flex justify-center bg-gradient-to-r from-violet-500 to-fuchsia-500">
+      <div className="flex justify-center md:grid grid-cols-2 h-screen">
+        <div className="flex items-center justify-center">
+          <form
+            className="rounded-xl flex flex-col p-2 m-4 items-center gap-10 bg-violet-950 md:w-3/4"
+            onSubmit={handleLogin}
+          >
+            <div className="p-4">
+              <h1 className="text-lg">Welcome to MyGroceries POS</h1>
+            </div>
+            <div className="flex flex-col gap-10 w-full items-center">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  className="input input-bordered w-full"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered w-full"
+                  name="password"
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <button className="btn bg-lime-500 hover:bg-lime-700 w-full max-w-xs">
+                  Login
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col items-center w-full gap-4">
+              <hr className="w-4/6" />
+              <p>Or continue with</p>
+              <GoogleLoginButton />
+            </div>
+          </form>
+        </div>
+        <div className="hidden md:flex p-14 justify-center bg-gradient-to-r from-violet-500 to-fuchsia-500">
           <img src={loginImage} alt="" />
         </div>
       </div>

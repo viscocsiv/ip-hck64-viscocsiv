@@ -8,8 +8,8 @@ const GoogleLoginButton = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="">
-        <GoogleOAuthProvider clientId="43222171383-jlkm5o9dh4gnpbkehv1lmk7opj0oa48i.apps.googleusercontent.com">
+      <div className="my-8">
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
               try {
