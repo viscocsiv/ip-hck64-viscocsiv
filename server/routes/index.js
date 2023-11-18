@@ -20,8 +20,6 @@ router.get('/products', ProductController.getAllProducts);
 
 router.post('/orders', OrderController.createOrder);
 
-router.post("/payment/:OrderId", PaymentController.midtransPayment)
-
 router.get('/orders/:OrderId', OrderController.getOrderDetail);
 
 router.post('/orders/:OrderId/carts', CartController.addProductToCart);
@@ -33,6 +31,8 @@ router.get('/orders/:OrderId/carts/:CartId', CartController.getCartDetail)
 router.patch('/orders/:OrderId/carts/:CartId', CartController.editQuantity);
 
 router.delete('/orders/:OrderId/carts/:CartId', CartController.deleteProductFromCart);
+
+router.post("/payment/midtrans/token", PaymentController.midtransPayment)
 
 router.use(errorHandler);
 
