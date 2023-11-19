@@ -96,7 +96,7 @@ export default function CashierPage() {
 
   return (
     <>
-      <div className="grid grid-rows-2 lg:grid-cols-2 my-20">
+      <div className="grid grid-rows-2 xl:grid-cols-2 my-20">
         <div className="flex flex-col align-middle items-center p-4">
           <div className="flex justify-between items-center w-full">
             <h1 className="my-2.5 text-xl">Product List</h1>
@@ -118,7 +118,7 @@ export default function CashierPage() {
           />
         </div>
         <div className="flex flex-col align-middle items-center p-4">
-            <h1 className="my-2.5 text-xl">Cart</h1>
+          <h1 className="my-2.5 text-xl">Cart</h1>
           <CartTable
             setCartId={setCartId}
             cartId={cartId}

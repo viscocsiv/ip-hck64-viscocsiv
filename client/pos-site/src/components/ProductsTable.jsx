@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 import formatPrice from "../helpers/formatPrice";
-export default function ProductsTable({ addItemToCart, products, orderId, userId }) {
-
+export default function ProductsTable({
+  addItemToCart,
+  products,
+  orderId,
+  userId,
+}) {
   return (
     <>
       <table className="text-center table table-auto my-4 flex flex-col bg-violet-700">
