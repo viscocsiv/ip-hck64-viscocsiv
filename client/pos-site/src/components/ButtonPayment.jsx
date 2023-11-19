@@ -23,7 +23,7 @@ export default function ButtonPayment({
           totalPrice,
         },
       });
-      //   console.log(data);
+      // console.log(data);
       window.snap.pay(data.transaction_token, {
         onSuccess: function () {
           /* You may add your own implementation here */

@@ -45,7 +45,7 @@ export default function CartTable({
 
   const handleIncrementQuantity = async (orderId, cartId, increment) => {
     try {
-      console.log(orderId, cartId, increment);
+      // console.log(orderId, cartId, increment);
       const { data } = await axios({
         method: "patch",
         url: url + `/orders/${orderId}/carts/${cartId}`,
@@ -53,10 +53,10 @@ export default function CartTable({
           Authorization: `Bearer ${localStorage.access_token}`,
         },
         data: {
-          increment
+          increment,
         },
       });
-      console.log(data);
+      // console.log(data);
       setTotalPrice(data.totalPrice);
       setItemsInCart(data.carts);
       setCartId(null);
@@ -77,7 +77,7 @@ export default function CartTable({
 
   const handleDecrementQuantity = async (orderId, cartId, decrement) => {
     try {
-      console.log(orderId, cartId, decrement);
+      // console.log(orderId, cartId, decrement);
       const { data } = await axios({
         method: "patch",
         url: url + `/orders/${orderId}/carts/${cartId}`,
@@ -88,7 +88,7 @@ export default function CartTable({
           decrement,
         },
       });
-      console.log(data);
+      // console.log(data);
       setTotalPrice(data.totalPrice);
       setItemsInCart(data.carts);
       setCartId(null);
@@ -130,7 +130,7 @@ export default function CartTable({
                 <td>{itemInCart.Product.name}</td>
                 <td>{formatPrice(itemInCart.Product.price)}</td>
                 <td>{itemInCart.quantity}</td>
-                <td className="flex gap-2">
+                <td className="flex flex-col gap-2 xl:flex-row">
                   <div>
                     <button
                       onClick={(event) => {

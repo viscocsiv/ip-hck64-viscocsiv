@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import cashierIcon from "../assets/cashier-icon.png";
 
 export default function HomePage() {
-  
   return (
     <>
       <div className="my-10 flex flex-col">
@@ -17,7 +16,9 @@ export default function HomePage() {
             <div className="card-body ">
               <h2 className="card-title justify-center">Cashier</h2>
               <div className="card-actions justify-center">
-                <Link to="/cashier" className="btn btn-secondary">New Transaction</Link>
+                <Link to="/cashier" className="btn btn-secondary">
+                  New Transaction
+                </Link>
               </div>
             </div>
           </div>
