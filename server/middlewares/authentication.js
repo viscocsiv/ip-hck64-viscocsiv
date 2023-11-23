@@ -4,9 +4,9 @@ const { User } = require('../models');
 
 const authentication = async (req, res, next) => {
     try {
-        // console.log(req.headers);
+        
         const { authorization } = req.headers;
-        // console.log(authorization);
+
         if (!authorization) throw { name: "Unauthenticated" };
 
         const rawToken = authorization.split(' ');
@@ -19,9 +19,9 @@ const authentication = async (req, res, next) => {
         }
 
         const token = rawToken[1];
-        // console.log(token)
+
         const payload = verifyToken(token);
-        // console.log(payload)
+
         const user = await User.findByPk(payload.id);
         if (!user) {
             throw { name: "Unauthenticated" }

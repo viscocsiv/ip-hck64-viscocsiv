@@ -4,7 +4,6 @@ class PaymentController {
     static async midtransPayment(req, res, next) {
         try {
             let snap = new midtransClient.Snap({
-                // Set to true if you want Production Environment (accept real transaction).
                 isProduction: false,
                 serverKey: process.env.MIDTRANS_SERVER_KEY
             });
@@ -20,7 +19,6 @@ class PaymentController {
             snap.createTransaction(parameter)
                 .then((transaction) => {
                     let transactionToken = transaction.token;
-                    // console.log('transactionToken:', transactionToken);
                     res.status(200).json({ transaction_token: transactionToken })
                 })
                 .catch((error) => {

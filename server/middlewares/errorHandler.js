@@ -7,13 +7,13 @@ const errorHandler = (err, req, res, next) => {
             res.status(400).json({ message: err.errors[0].message });
             break;
         case "SequelizeDatabaseError":
-            res.status(400).json({message: 'Please click new order first'})
+            res.status(400).json({ message: 'Please click new order first' })
             break;
         case "InvalidParams":
             res.status(400).json({ message: 'Invalid params' });
         case "InvalidQuantity":
-            res.status(400).json({message: 'Minimum quantity is 1. If you want to delete an item from cart, click delete button'})
-            case "InvalidInput":
+            res.status(400).json({ message: 'Minimum quantity is 1. If you want to delete an item from cart, click delete button' })
+        case "InvalidInput":
             res.status(400).json({ message: `${err.field} is required` });
             break;
         case "DuplicatedInput":
