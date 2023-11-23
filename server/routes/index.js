@@ -12,27 +12,27 @@ const router = express.Router();
 
 router.post('/login', AuthController.login); // 1
 
-router.post('/auth/google/callback', AuthController.googleLogin); // 2
+router.post('/auth/google/callback', AuthController.googleLogin);
 
 router.use(authentication);
 
-router.get('/products', ProductController.getAllProducts); // 3
+router.get('/products', ProductController.getAllProducts); // 2
 
-router.post('/orders', OrderController.createOrder); // 4
+router.post('/orders', OrderController.createOrder); // 3
 
-router.get('/orders/:OrderId', OrderController.getOrderDetail); // 5
+router.get('/orders/:OrderId', OrderController.getOrderDetail); // 4
 
-router.post('/orders/:OrderId/carts', CartController.addProductToCart); // 6
+router.post('/orders/:OrderId/carts', CartController.addProductToCart); // 5
 
-router.get('/orders/:OrderId/carts', CartController.getCarts); // 7
+router.get('/orders/:OrderId/carts', CartController.getCarts); // 6
 
-router.get('/orders/:OrderId/carts/:CartId', CartController.getCartDetail) // 8
+router.get('/orders/:OrderId/carts/:CartId', CartController.getCartDetail); // 7
 
-router.patch('/orders/:OrderId/carts/:CartId', CartController.editQuantity); // 9
+router.patch('/orders/:OrderId/carts/:CartId', CartController.editQuantity); // 8
 
-router.delete('/orders/:OrderId/carts/:CartId', CartController.deleteProductFromCart); // 10
+router.delete('/orders/:OrderId/carts/:CartId', CartController.deleteProductFromCart); // 9
 
-router.post("/payment/midtrans/token", PaymentController.midtransPayment) // 11
+router.post("/payment/midtrans/token", PaymentController.midtransPayment);
 
 router.use(errorHandler); // 12
 

@@ -3,8 +3,8 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const routers = require('./routes')
-const cors = require('cors')
+const routers = require('./routes');
+const cors = require('cors');
 
 // middleware body-parser
 app.use(express.urlencoded({ extended: false }));

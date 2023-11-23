@@ -5,11 +5,11 @@ const generatePrice = require('../helpers/generatePrice');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const {data} = await axios({
+    const { data } = await axios({
       method: 'get',
       url: 'https://simple-grocery-store-api.glitch.me/products'
     })
-    
+
     const products = data.map((product) => {
       delete product.id;
       product.price = generatePrice(5000, 50000);

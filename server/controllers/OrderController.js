@@ -7,7 +7,7 @@ class OrderController {
         try {
             const { id } = req.user
             const order = await Order.create({});
-            // console.log(order);
+
             res.status(201).json({ created: true, OrderId: order.id, UserId: id });
         } catch (error) {
             next(error);
@@ -16,11 +16,14 @@ class OrderController {
 
     static async getOrderDetail(req, res, next) {
         try {
-            // console.log(req.params);
             const { OrderId } = req.params;
+
             if (isNaN(+OrderId)) throw { name: "InvalidParams" };
+
             const order = await Order.findByPk(OrderId);
+
             if (!order) throw { name: 'NotFound' };
+
             res.status(200).json(order);
         } catch (error) {
             next(error);
