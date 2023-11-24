@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import formatPrice from "../helpers/formatPrice";
-export default function ProductsTable({
-  addItemToCart,
-  products,
-  orderId,
-  userId,
-}) {
+export default function ProductsTable({ addItemToCart, products, orderId }) {
+  const { userId, setUserId } = useContext(AuthContext);
   return (
     <>
+      {console.log(userId)}
       <table className="text-center table table-auto my-4 flex flex-col bg-violet-700">
         <thead>
           <tr>
@@ -31,8 +30,6 @@ export default function ProductsTable({
                   <button
                     onClick={(event) => {
                       event.preventDefault();
-                      // console.log(event);
-                      // console.log(orderId, id, userId);
                       addItemToCart(orderId, id, userId);
                     }}
                     className="btn btn-primary"

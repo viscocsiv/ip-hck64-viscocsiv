@@ -22,7 +22,8 @@ const GoogleLoginButton = () => {
                 );
                 // console.log(data, '<<< credentials');
 
-                localStorage.setItem("access_token", data);
+                localStorage.setItem("access_token", data.access_token);
+                localStorage.setItem("userId", data.userId);
                 navigate("/");
               } catch (error) {
                 console.error("Login failed:", error.message);
