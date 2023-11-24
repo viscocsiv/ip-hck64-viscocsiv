@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import url from "../../constants";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import loginImage from "../assets/login-background.svg";
+import AuthContext from "../context/AuthContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { userId, setUserId } = useContext(AuthContext);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -26,8 +28,10 @@ export default function LoginPage() {
     event.preventDefault();
     try {
       const { data } = await axios.post(url + "/login", form);
-
+      console.log(data);
       localStorage.access_token = data.access_token;
+      localStorage.userId = data.userId;
+      setUserId(data.userId);
       return navigate("/");
     } catch (error) {
       toast.error(error.response.data.message, {

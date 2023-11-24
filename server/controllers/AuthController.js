@@ -49,7 +49,7 @@ class AuthController {
 
             const access_token = createToken({ id: user[0].id })
 
-            res.status(200).json(access_token);
+            res.status(200).json({ access_token, userId: user[0].id });
         } catch (error) {
             console.log(error.message);
             next(error)
