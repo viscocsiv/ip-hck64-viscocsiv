@@ -6,21 +6,23 @@ List of available endpoints:
 
 Without authentication:
 
-- `POST /login` 1
+- `POST /login`
+- `POST /auth/google/callback`
 
 Using authentication
 
-- `GET /products` 2
-- `POST /orders` 3
+- `GET /products`
+- `POST /orders`
 
 Using authorization
 
-- `GET /orders/:OrderId` 4
-- `POST /orders/:OrderId/carts` 5
-- `GET /orders/:OrderId/carts` 6
-- `GET /orders/:OrderId/carts/:CartId` 7
-- `PATCH /orders/:OrderId/carts/:CartId` 8
-- `DELETE /orders/:OrderId/carts/:CartId` 9
+- `GET /orders/:OrderId`
+- `POST /orders/:OrderId/carts`
+- `GET /orders/:OrderId/carts`
+- `GET /orders/:OrderId/carts/:CartId`
+- `PATCH /orders/:OrderId/carts/:CartId`
+- `DELETE /orders/:OrderId/carts/:CartId`
+- `POST /payment/midtrans/token`
 
 ## 1. POST /login
 
@@ -39,7 +41,7 @@ Request:
 }
 ```
 
-_Response (201 - Created)_
+_Response (200 - OK)_
 
 ```json
 {
@@ -60,7 +62,40 @@ OR
 }
 ```
 
-## 2. GET /products
+## 2. POST /auth/google/callback
+
+Description:
+
+- Authenticate user login and generate access token using google account
+
+Request:
+
+- body
+
+```json
+{
+  "code": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+  "access_token": "string",
+  "userId": "integer"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+  "message": "Invalid Token"
+}
+```
+
+## 3. GET /products
 
 Description:
 
@@ -102,7 +137,7 @@ _Response (200 - OK)_
 ]
 ```
 
-## 3. POST /orders
+## 4. POST /orders
 
 Description:
 
@@ -136,7 +171,7 @@ _Response (201 - Created)_
 }
 ```
 
-## 4. GET /orders/:OrderId
+## 5. GET /orders/:OrderId
 
 Description:
 
@@ -187,7 +222,7 @@ _Response (404 - Not Found)_
 }
 ```
 
-## 5. POST /orders/:OrderId/carts
+## 6. POST /orders/:OrderId/carts
 
 Description:
 
@@ -271,7 +306,7 @@ _Response (404 - Not Found)_
 }
 ```
 
-## 6. GET /orders/:OrderId/carts
+## 7. GET /orders/:OrderId/carts
 
 Description:
 
@@ -337,7 +372,7 @@ _Response (404 - Not Found)_
 }
 ```
 
-## 7. GET /orders/:OrderId/carts/:CartId
+## 8. GET /orders/:OrderId/carts/:CartId
 
 Description:
 
@@ -406,7 +441,7 @@ _Response (404 - Not Found)_
 }
 ```
 
-## 8. PATCH /orders/:OrderId/carts/:CartId
+## 9. PATCH /orders/:OrderId/carts/:CartId
 
 Description:
 
@@ -447,7 +482,7 @@ _Response (200 - OK)_
 
 ```json
 {
-    "totalPrice": 1796352,
+    "totalPrice": 53321,
     "carts": [
         {
             "id": 493,
@@ -487,6 +522,75 @@ _Response (200 - OK)_
         }
         ...,
     ]
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+  "message": "Invalid params"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Data Not Found"
+}
+```
+
+## 10. DELETE /orders/:OrderId/carts/:CartId
+
+Description:
+
+- Delete items from cart
+
+Request:
+
+- headers:
+
+```json
+{
+  "Authorization": "Bearer <access_token>"
+}
+```
+
+- params:
+
+```json
+{
+  "CartId": "integer",
+  "OrderId": "integer"
+}
+```
+
+Response:
+
+```json
+{
+  "totalPrice": 25495,
+  "carts": [
+    {
+      "id": 493,
+      "OrderId": 204,
+      "ProductId": 1,
+      "UserId": 1,
+      "quantity": 12,
+      "createdAt": "2023-11-18T22:14:12.637Z",
+      "updatedAt": "2023-11-18T22:15:17.658Z",
+      "Product": {
+        "id": 1,
+        "name": "Starbucks Coffee Variety Pack, 100% Arabica",
+        "category": "coffee",
+        "inStock": true,
+        "price": 25495,
+        "createdAt": "2023-11-15T08:12:58.386Z",
+        "updatedAt": "2023-11-15T08:12:58.386Z"
+      }
+    }
+  ]
 }
 ```
 

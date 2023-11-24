@@ -51,7 +51,8 @@ class AuthController {
 
             res.status(200).json({ access_token, userId: user[0].id });
         } catch (error) {
-            console.log(error.message);
+            error.name = "InvalidToken"
+            // console.log(error);
             next(error)
         }
     }
